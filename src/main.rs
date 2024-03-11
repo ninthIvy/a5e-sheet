@@ -25,10 +25,10 @@ fn main() {
         .add("create", command! 
         {
             "Create a character",
-            (strength: u8, dex: u8, con: u8, wis: u8, intel: u8, cha: u8) => |strength, dex, con, wis, intel, cha| 
+            () => || 
             {
                 let mut character = my_character_ref.lock().unwrap();
-                character.init(strength, dex, con, wis, intel, cha);
+                character.init();
                 println!("Stats created: {:?}", character.stats);
                 Ok(CommandStatus::Done)
             }
@@ -100,6 +100,7 @@ fn main() {
                     {
                         println!("Stat {}: {}", index + 1, stat);
                     }
+                    println!("Name: {}", character.name);
                     Ok(CommandStatus::Done)
                 } 
             }
