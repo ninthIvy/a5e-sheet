@@ -4,9 +4,9 @@ use libcharacter::Character;
 use std::sync::{Arc, Mutex};
 use std::fs::File;
 use std::io::prelude::*;
-use std::path::Path;
-use std::path::PathBuf;
-use bincode::{serialize, deserialize};
+//use std::path::Path;
+//use std::path::PathBuf;
+use bincode::serialize;
 
 fn main() {
     let my_character = Arc::new(Mutex::new(Character::default()));
@@ -68,12 +68,10 @@ fn main() {
                     let mut stringbean = String::from(name);
                     stringbean.push_str(".chr");
                     let mut file = File::open(&stringbean).expect("Failed to create file.");
-
-                    //let character = my_character_ref.lock().unwrap();
                     
 
                     let mut decoded = Vec::new();
-                    file.read_to_end(&mut decoded).expect("failed write");
+                    file.read_to_end(&mut decoded).expect("failed read");
                     let character: Character = bincode::deserialize(&decoded).expect("Deserialization failed");
 
                     let mut character_lock = my_character_ref.lock().unwrap();
